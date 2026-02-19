@@ -1,22 +1,725 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Hướng Dẫn Tạo Nhạc AI</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎵 Hướng Dẫn Tạo Nhạc AI — Gemini, Suno & Udio</title>
+  <meta name="description" content="Hướng dẫn chi tiết tạo nhạc bằng AI: Gemini Lyria 3, Suno AI, Udio. Prompt mẫu nhạc Việt, Bolero, V-Pop, Nhạc Xuân Tết 2026."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
-    h1 { color: #6200ea; }
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --surface2: #16213e;
+      --accent: #7c3aed;
+      --accent2: #a855f7;
+      --gold: #f59e0b;
+      --green: #10b981;
+      --red: #ef4444;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: rgba(124,58,237,0.25);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    /* === HERO === */
+    .hero {
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a0533 50%, #0f0f1a 100%);
+      text-align: center;
+      padding: 80px 20px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at center, rgba(124,58,237,0.15) 0%, transparent 70%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); opacity:0.5; }
+      50% { transform: scale(1.1); opacity:1; }
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(124,58,237,0.2);
+      border: 1px solid var(--accent);
+      color: var(--accent2);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      position: relative;
+      background: linear-gradient(135deg, #fff 0%, #a855f7 50%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      position: relative;
+    }
+    .wave {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 16px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* === NAV === */
+    nav {
+      background: rgba(26,26,46,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 20px;
+    }
+    .nav-inner {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      padding: 10px 0;
+      scrollbar-width: none;
+    }
+    .nav-inner::-webkit-scrollbar { display:none; }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    nav a:hover {
+      background: rgba(124,58,237,0.2);
+      color: var(--accent2);
+    }
+
+    /* === MAIN === */
+    main { max-width: 900px; margin: auto; padding: 40px 20px 80px; }
+
+    /* === SECTION === */
+    section { margin-bottom: 60px; }
+    section h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 24px 0 12px;
+      color: var(--accent2);
+    }
+    p { color: var(--muted); margin-bottom: 12px; }
+
+    /* === CARDS === */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(124,58,237,0.25);
+    }
+    .card-icon { font-size: 2rem; margin-bottom: 10px; }
+    .card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; color: #fff; }
+    .card p { font-size: 0.88rem; margin:0; }
+
+    /* === STEPS === */
+    .steps { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+    .step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      transition: all 0.3s;
+    }
+    .step:hover { border-color: var(--accent); }
+    .step-num {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .step-content h4 { font-size: 0.95rem; font-weight: 600; color:#fff; margin-bottom:4px; }
+    .step-content p { font-size: 0.88rem; margin:0; }
+
+    /* === COMPARE TABLE === */
+    .compare-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    .compare-table th, .compare-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .compare-table th {
+      background: rgba(124,58,237,0.15);
+      font-weight: 600;
+      color: var(--accent2);
+    }
+    .compare-table tr:hover td { background: rgba(124,58,237,0.06); }
+    .badge-green { color: var(--green); font-weight: 600; }
+    .badge-gold { color: var(--gold); font-weight: 600; }
+    .badge-red { color: var(--red); font-weight: 600; }
+
+    /* === PROMPT BOX === */
+    .prompt-box {
+      background: #0d1117;
+      border: 1px solid rgba(124,58,237,0.4);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin: 14px 0;
+      position: relative;
+    }
+    .prompt-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 10px;
+    }
+    .prompt-box pre {
+      color: #c9d1d9;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.6;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(124,58,237,0.3);
+      border: 1px solid var(--accent);
+      color: var(--accent2);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { background: var(--accent); color: #fff; }
+
+    /* === TIPS === */
+    .tip-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+    .tip-list li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .tip-list li span:first-child { flex-shrink: 0; }
+
+    /* === ALERT BOX === */
+    .alert {
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.4);
+      border-left: 4px solid var(--gold);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 0.9rem;
+      color: #fde68a;
+    }
+    .alert-blue {
+      background: rgba(59,130,246,0.1);
+      border-color: rgba(59,130,246,0.4);
+      border-left-color: #3b82f6;
+      color: #bfdbfe;
+    }
+
+    /* === CONCLUSION CARDS === */
+    .conclusion-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    @media(max-width:600px) { .conclusion-grid { grid-template-columns: 1fr; } }
+    .conclusion-card {
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .conclusion-card.purple {
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.4);
+    }
+    .conclusion-card.orange {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid rgba(245,158,11,0.3);
+    }
+    .conclusion-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; }
+    .conclusion-card ul { list-style: none; display:flex; flex-direction:column; gap:6px; }
+    .conclusion-card ul li { font-size: 0.88rem; color: var(--muted); }
+
+    /* === FOOTER === */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--accent2); text-decoration: none; }
+
+    /* === SCROLLBAR === */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+    @media(max-width:640px) {
+      .hero { padding: 60px 16px 40px; }
+      section h2 { font-size: 1.3rem; }
+    }
   </style>
 </head>
 <body>
-  <h1>🎵 Hướng Dẫn Tạo Nhạc AI</h1>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="wave">🎵</span>
+  <div class="hero-badge">AI Music Guide 2026</div>
+  <h1>Hướng Dẫn Tạo Nhạc Bằng AI</h1>
+  <p>Gemini Lyria 3 · Suno AI · Udio — Từ Zero đến có bài nhạc hoàn chỉnh chỉ trong vài phút</p>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#overview">📌 Tổng Quan</a>
+    <a href="#tools">🛠️ Công Cụ</a>
+    <a href="#compare">⚖️ So Sánh</a>
+    <a href="#steps">📋 Cách Dùng</a>
+    <a href="#prompts">✍️ Prompt Tips</a>
+    <a href="#viet">🇻🇳 Nhạc Việt</a>
+    <a href="#tet">🧧 Nhạc Tết</a>
+    <a href="#limits">⚠️ Hạn Chế</a>
+    <a href="#conclusion">✅ Kết Luận</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- 1. TỔNG QUAN -->
   <section id="overview">
-    <h2>1. Tổng Quan</h2>
-    <p>Nội dung của bạn ở đây...</p>
+    <h2>📌 1. Tổng Quan</h2>
+    <p>AI tạo nhạc đang bùng nổ vào năm 2026. Chỉ cần gõ vài dòng mô tả, bạn có thể tạo ra một bài nhạc hoàn chỉnh — có giai điệu, giọng hát, lời.Không cần biết nhạc lý, không cần nhạc cụ.</p>
+    <div class="alert alert-blue">
+      💡 <strong>Gemini Lyria 3</strong> là model tạo nhạc AI tiên tiến nhất của <strong>Google DeepMind</strong>, tích hợp trực tiếp trong Gemini App tại <a href="https://gemini.google.com" target="_blank">gemini.google.com</a>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h4>Nhanh chóng</h4>
+        <p>Tạo bài nhạc trong vòng 30–60 giây chỉ từ một đoạn mô tả văn bản.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎤</div>
+        <h4>Vocals + Lyrics</h4>
+        <p>Tạo cả nhạc nền lẫn giọng hát và lời bài hát hoàn chỉnh.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🖼️</div>
+        <h4>Multimodal</h4>
+        <p>Upload ảnh hoặc video — AI phân tích mood và tạo nhạc phù hợp.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🆓</div>
+        <h4>Miễn phí</h4>
+        <p>Có thể dùng với tài khoản Google thường, không cần trả phí.</p>
+      </div>
+    </div>
   </section>
+
+  <!-- 2. CÔNG CỤ -->
+  <section id="tools">
+    <h2>🛠️ 2. Các Công Cụ Tạo Nhạc AI</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🟣</div>
+        <h4>Gemini Lyria 3</h4>
+        <p>Của Google DeepMind. Tích hợp trong Gemini App. Clip 30s, vocals + lyrics. <strong style="color:var(--green)">Miễn phí.</strong></p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🟠</div>
+        <h4>Suno AI</h4>
+        <p>Bài nhạc full-length. Control cấu trúc chi tiết. Có plan miễn phí giới hạn.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔵</div>
+        <h4>Udio</h4>
+        <p>Chất lượng audio cao. Phong cách đa dạng. Giao diện thân thiện.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎵</div>
+        <h4>MusicFX (Google)</h4>
+        <p>Tạo nhạc nền instrumental ngắn. Tại <a href="https://aitestkitchen.withgoogle.com" target="_blank" style="color:var(--accent2)">AI Test Kitchen</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. SO SÁNH -->
+  <section id="compare">
+    <h2>⚖️ 3. So Sánh: Gemini vs Suno vs Udio</h2>
+    <div style="overflow-x:auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Tiêu chí</th>
+            <th>🟣 Gemini Lyria 3</th>
+            <th>🟠 Suno AI</th>
+            <th>🔵 Udio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Giá</td>
+            <td class="badge-green">Miễn phí</td>
+            <td class="badge-gold">Free (giới hạn)</td>
+            <td class="badge-gold">Free (giới hạn)</td>
+          </tr>
+          <tr>
+            <td>Độ dài nhạc</td>
+            <td>~30 giây</td>
+            <td class="badge-green">Full-length</td>
+            <td class="badge-green">Full-length</td>
+          </tr>
+          <tr>
+            <td>Vocals</td>
+            <td class="badge-green">✅ Có</td>
+            <td class="badge-green">✅ Có</td>
+            <td class="badge-green">✅ Có</td>
+          </tr>
+          <tr>
+            <td>Image-to-Music</td>
+            <td class="badge-green">✅ Có</td>
+            <td class="badge-red">❌ Không</td>
+            <td class="badge-red">❌ Không</td>
+          </tr>
+          <tr>
+            <td>Tiếng Việt</td>
+            <td class="badge-gold">Cần prompt rõ</td>
+            <td class="badge-gold">Cần prompt rõ</td>
+            <td class="badge-gold">Cần prompt rõ</td>
+          </tr>
+          <tr>
+            <td>API cho Dev</td>
+            <td class="badge-green">✅ Lyria RealTime</td>
+            <td class="badge-red">❌ Không</td>
+            <td class="badge-red">❌ Không</td>
+          </tr>
+          <tr>
+            <td>Dễ dùng</td>
+            <td class="badge-green">⭐⭐⭐⭐⭐</td>
+            <td class="badge-green">⭐⭐⭐⭐</td>
+            <td class="badge-gold">⭐⭐⭐</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4. CÁCH DÙNG -->
   <section id="steps">
-    <h2>2. Các Bước Thực Hiện</h2>
-    <p>Bước tiếp theo...</p>
+    <h2>📋 4. Cách Dùng Gemini Tạo Nhạc (Step-by-Step)</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Truy cập Gemini App</h4>
+          <p>Mở <a href="https://gemini.google.com" target="_blank" style="color:var(--accent2)">gemini.google.com</a> và đăng nhập bằng tài khoản Google. Phải từ 18 tuổi trở lên.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Tìm nút "Create music"</h4>
+          <p>Tìm menu <strong>Tools</strong> dropdown hoặc nút <strong>Create music</strong> trong giao diện chat. Chọn <strong>Music</strong> để bắt đầu.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Chọn phương thức tạo nhạc</h4>
+          <p>🔹 <strong>Text Prompt</strong> — gõ mô tả nhạc<br>🔹 <strong>Image/Video</strong> — upload ảnh → AI tạo nhạc theo mood<br>🔹 <strong>Remix</strong> — phối lại track có sẵn</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Nhập Prompt và tạo</h4>
+          <p>Viết mô tả chi tiết về thể loại, nhạc cụ, mood, giọng hát. Càng chi tiết càng tốt. Nhấn Generate.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Nghe, chỉnh sửa & tải về</h4>
+          <p>Clip nhạc 30s kèm lyrics và cover art. Nếu chưa ưng → sửa prompt và thử lại. Tải về hoặc chia sẻ.</p>
+        </div>
+      </div>
+    </div>
+    <div class="alert" style="margin-top:20px;">
+      ⚠️ <strong>Lưu ý:</strong> Không phải mọi tài khoản đều thấy nút "Create music" ngay — kể cả gói Ultra. Nếu chưa thấy → đợi vài ngày hoặc thử tài khoản khác.
+    </div>
   </section>
+
+  <!-- 5. PROMPT TIPS -->
+  <section id="prompts">
+    <h2>✍️ 5. Prompt Engineering Tips</h2>
+    <p>Prompt tốt = nhạc hay. Hãy chỉ định đầy đủ các thành phần sau:</p>
+    <ul class="tip-list">
+      <li><span>🎸</span><span><strong>Genre (Thể loại):</strong> Ballad, Pop, Rock, EDM, Lo-fi, Bolero, V-Pop...</span></li>
+      <li><span>🥁</span><span><strong>BPM (Nhịp độ):</strong> Chậm 60–80 BPM | Vừa 90–110 | Nhanh 120–140+</span></li>
+      <li><span>🎹</span><span><strong>Instruments (Nhạc cụ):</strong> Piano, guitar, strings, synth, đàn tranh, sáo...</span></li>
+      <li><span>🎤</span><span><strong>Vocals (Giọng hát):</strong> Female/Male, emotional, dreamy, energetic...</span></li>
+      <li><span>💫</span><span><strong>Mood (Cảm xúc):</strong> Romantic, melancholic, hopeful, festive, chill...</span></li>
+      <li><span>📝</span><span><strong>Lyrics theme (Chủ đề lời):</strong> Tình yêu, quê hương, mùa xuân, tuổi trẻ...</span></li>
+      <li><span>🇻🇳</span><span><strong>Language:</strong> Luôn thêm <code style="background:#1e293b;padding:2px 6px;border-radius:4px;">"Sing in Vietnamese language"</code> để có lời tiếng Việt.</span></li>
+    </ul>
+
+    <h3>📌 Ví Dụ Prompt Chuyên Sâu</h3>
+    <div class="prompt-box">
+      <div class="prompt-label">🎸 Indie Rock</div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <pre>Create an indie rock track at 125 BPM with:
+- Instruments: Electric guitar, bass, drums, subtle synth pads
+- Vocals: Female, dreamy and ethereal, mid-range
+- Mood: Start melancholic, build to hopeful
+- Lyrics: About finding light after dark times
+- Structure: Verse → Pre-chorus → Chorus</pre>
+    </div>
+  </section>
+
+  <!-- 6. NHẠC VIỆT -->
+  <section id="viet">
+    <h2>🇻🇳 6. Prompt Mẫu — Nhạc Việt</h2>
+
+    <h3>🎹 Ballad Việt (Trữ tình)</h3>
+    <div class="prompt-box">
+      <div class="prompt-label">Prompt 1 — Ballad Việt</div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <pre>Create a Vietnamese-style ballad at 85 BPM:
+- Genre: Vietnamese pop ballad
+- Instruments: Piano, acoustic guitar, soft strings, light percussion
+- Vocals: Female, warm and emotional, mid-range
+- Mood: Romantic, nostalgic, gentle
+- Lyrics theme: Missing someone far away, memories of hometown
+- Language: Vietnamese. Sing in Vietnamese language</pre>
+    </div>
+
+    <h3>🎸 Bolero Việt</h3>
+    <div class="prompt-box">
+      <div class="prompt-label">Prompt 2 — Bolero Việt</div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <pre>Create a Vietnamese bolero track at 90 BPM:
+- Genre: Vietnamese bolero
+- Instruments: Guitar, organ, light drums, bass
+- Vocals: Male, deep and soulful, slightly vibrato
+- Mood: Melancholic, sentimental, bittersweet
+- Lyrics theme: Love story, separation, rainy evening
+- Language: Vietnamese. Sing in Vietnamese language</pre>
+    </div>
+
+    <h3>🎤 V-Pop Hiện Đại</h3>
+    <div class="prompt-box">
+      <div class="prompt-label">Prompt 3 — V-Pop EDM</div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <pre>Create a modern Vietnamese pop (V-Pop) track at 128 BPM:
+- Genre: V-Pop with EDM elements
+- Instruments: Synth, electronic drums, bass drop, piano riff
+- Vocals: Female, energetic and youthful
+- Mood: Upbeat, confident, party vibe
+- Lyrics theme: Living your best life, chasing dreams
+- Language: Vietnamese. Sing in Vietnamese language</pre>
+    </div>
+  </section>
+
+  <!-- 7. NHẠC TẾT -->
+  <section id="tet">
+    <h2>🧧 7. Prompt Mẫu — Nhạc Xuân & Tết 2026</h2>
+
+    <h3>🎋 Nhạc Xuân Truyền Thống</h3>
+    <div class="prompt-box">
+      <div class="prompt-label">Prompt 4 — Nhạc Tết Truyền Thống</div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <pre>Create a Vietnamese Lunar New Year (Tet) celebration song at 115 BPM:
+- Genre: Vietnamese traditional pop with festive elements
+- Instruments: Dan tranh (Vietnamese zither), bamboo flute,
+  light percussion, acoustic guitar, cheerful bells
+- Vocals: Mixed male and female, joyful and warm
+- Mood: Festive, joyful, hopeful, family warmth
+- Lyrics theme: Spring flowers blooming, family reunion,
+  new year wishes, prosperity and happiness
+- Language: Vietnamese. Sing in Vietnamese language</pre>
+    </div>
+
+    <h3>🎆 Nhạc Tết Hiện Đại (Pop-Folk Fusion)</h3>
+    <div class="prompt-box">
+      <div class="prompt-label">Prompt 5 — Modern Tet Pop</div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <pre>Create a modern Vietnamese Tet/Spring festival song at 120 BPM:
+- Genre: Upbeat pop with Vietnamese folk fusion
+- Instruments: Electronic beats, synth, traditional Vietnamese
+  instruments (dan bau, dan tranh), hand claps
+- Vocals: Female, bright and cheerful, young voice
+- Mood: Energetic celebration, fresh start, excitement
+- Lyrics theme: New year new beginnings, spring is here,
+  red envelopes, firecrackers, peach blossoms
+- Language: Vietnamese. Sing in Vietnamese language</pre>
+    </div>
+
+    <h3>☕ Nhạc Xuân Lo-fi / Chill</h3>
+    <div class="prompt-box">
+      <div class="prompt-label">Prompt 6 — Lo-fi Tết Chill</div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <pre>Create a lo-fi chill Vietnamese spring track at 80 BPM:
+- Genre: Lo-fi hip-hop with Vietnamese aesthetic
+- Instruments: Lo-fi piano, vinyl crackle, soft beat,
+  dan tranh sample, rain ambience
+- Vocals: Soft humming, minimal lyrics
+- Mood: Peaceful, reflective, cozy Tet morning
+- Lyrics theme: Quiet spring morning, tea with family,
+  watching rain on apricot blossoms</pre>
+    </div>
+  </section>
+
+  <!-- 8. HẠN CHẾ -->
+  <section id="limits">
+    <h2>⚠️ 8. Hạn Chế Hiện Tại</h2>
+    <ul class="tip-list">
+      <li><span>⏱️</span><span><strong>Chỉ 30 giây:</strong> Gemini Lyria 3 hiện tạo clip tối đa ~30 giây, không phải full song.</span></li>
+      <li><span>🔑</span><span><strong>Rollout chưa đều:</strong> Không phải tất cả tài khoản đều có tính năng "Create music", kể cả gói Ultra.</span></li>
+      <li><span>🌐</span><span><strong>Tiếng Việt chưa tự nhiên:</strong> Cần thêm "Sing in Vietnamese" vào prompt; lời đôi khi vẫn bị lẫn tiếng Anh.</span></li>
+      <li><span>📋</span><span><strong>Không có commercial license rõ ràng:</strong> Cần kiểm tra Terms of Service trước khi dùng thương mại.</span></li>
+      <li><span>🎛️</span><span><strong>Ít control cấu trúc:</strong> Không thể chỉ định verse/chorus cụ thể như Suno AI.</span></li>
+    </ul>
+  </section>
+
+  <!-- 9. KẾT LUẬN -->
+  <section id="conclusion">
+    <h2>✅ 9. Kết Luận & Đánh Giá</h2>
+    <p>Tùy nhu cầu mà chọn công cụ phù hợp:</p>
+    <div class="conclusion-grid">
+      <div class="conclusion-card purple">
+        <h4>🟣 Dùng Gemini Lyria 3 khi:</h4>
+        <ul>
+          <li>✅ Cần nhạc nhanh cho social media</li>
+          <li>✅ Muốn tạo jingle / background music</li>
+          <li>✅ Tạo nhạc từ ảnh hoặc video</li>
+          <li>✅ Muốn dùng miễn phí trong Gemini</li>
+          <li>✅ Là developer cần Lyria API</li>
+        </ul>
+      </div>
+      <div class="conclusion-card orange">
+        <h4>🟠 Dùng Suno / Udio khi:</h4>
+        <ul>
+          <li>✅ Cần bài hát full-length</li>
+          <li>✅ Muốn control cấu trúc chi tiết</li>
+          <li>✅ Cần commercial use rõ ràng</li>
+          <li>✅ Muốn mimic phong cách nghệ sĩ</li>
+          <li>✅ Cần nhiều lượt tạo nhạc/ngày</li>
+        </ul>
+      </div>
+    </div>
+    <div class="alert alert-blue" style="margin-top:20px;">
+      🚀 <strong>Khuyến nghị:</strong> Bắt đầu với <strong>Gemini Lyria 3</strong> vì miễn phí và dễ dùng nhất. Khi cần bài nhạc dài hơn thì chuyển sang <strong>Suno AI</strong>.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>📅 Cập nhật: 19/02/2026 &nbsp;|&nbsp; Nguồn: <a href="https://blog.google" target="_blank">Google Blog</a> · <a href="https://9to5google.com" target="_blank">9to5Google</a> · <a href="https://suno.com" target="_blank">Suno AI</a></p>
+  <p style="margin-top:8px; color:#4b5563;">Made with ❤️ — Powered by AI Research</p>
+</footer>
+
+<script>
+  function copyPrompt(btn) {
+    const pre = btn.nextElementSibling;
+    navigator.clipboard.writeText(pre.textContent).then(() => {
+      btn.textContent = '✅ Đã copy!';
+      btn.style.background = 'var(--green)';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 2000);
+    });
+  }
+</script>
+
 </body>
 </html>
