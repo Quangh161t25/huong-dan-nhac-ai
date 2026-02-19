@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📖 Hướng Dẫn Tạo Trang Web GitHub Pages</title>
+    <meta name="description"
+        content="Hướng dẫn từng bước tạo trang web tĩnh miễn phí bằng GitHub Pages — có hình ảnh minh họa chi tiết." />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0a0f1a;
+            --surface: #111827;
+            --s2: #1f2937;
+            --accent: #06b6d4;
+            --a2: #22d3ee;
+            --gold: #f59e0b;
+            --green: #10b981;
+            --red: #ef4444;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --border: rgba(6, 182, 212, .22);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #0a0f1a, #001e2b, #0a0f1a);
+            text-align: center;
+            padding: 70px 20px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(6, 182, 212, .12) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: .5
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(6, 182, 212, .15);
+            border: 1px solid var(--accent);
+            color: var(--a2);
+            padding: 5px 16px;
+            border-radius: 50px;
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 3.2rem);
+            font-weight: 800;
+            margin-bottom: 14px;
+            position: relative;
+            background: linear-gradient(135deg, #fff 0%, #22d3ee 50%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 580px;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .wave {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 14px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-10px)
+            }
+        }
+
+        .hero-links {
+            position: relative;
+            margin-top: 12px;
+        }
+
+        .hero-links a {
+            display: inline-block;
+            background: rgba(6, 182, 212, .12);
+            border: 1px solid var(--accent);
+            color: var(--a2);
+            padding: 7px 18px;
+            border-radius: 8px;
+            font-size: .88rem;
+            text-decoration: none;
+            margin: 3px;
+            transition: all .2s;
+        }
+
+        .hero-links a:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* NAV */
+        nav {
+            background: rgba(17, 24, 39, .95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0 20px;
+        }
+
+        .nav-inner {
+            max-width: 960px;
+            margin: auto;
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            padding: 10px 0;
+            scrollbar-width: none;
+        }
+
+        .nav-inner::-webkit-scrollbar {
+            display: none;
+        }
+
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            padding: 6px 13px;
+            border-radius: 8px;
+            font-size: .83rem;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all .2s;
+        }
+
+        nav a:hover {
+            background: rgba(6, 182, 212, .18);
+            color: var(--a2);
+        }
+
+        /* MAIN */
+        main {
+            max-width: 960px;
+            margin: auto;
+            padding: 40px 20px 80px;
+        }
+
+        section {
+            margin-bottom: 56px;
+        }
+
+        section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 22px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--a2);
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        /* STEP CARD */
+        .step-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all .3s;
+        }
+
+        .step-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 32px rgba(6, 182, 212, .15);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .step-num {
+            background: linear-gradient(135deg, var(--accent), var(--a2));
+            color: #fff;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: .9rem;
+            flex-shrink: 0;
+        }
+
+        .step-header h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+        }
+
+        .step-header p {
+            font-size: .83rem;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .step-body {
+            padding: 20px;
+        }
+
+        /* MOCK UI */
+        .mock {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .mock-bar {
+            background: #161b22;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .mock-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+
+        .d-r {
+            background: #ff5f57;
+        }
+
+        .d-y {
+            background: #febc2e;
+        }
+
+        .d-g {
+            background: #28c840;
+        }
+
+        .mock-url {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #8b949e;
+            font-size: .78rem;
+            padding: 3px 10px;
+            flex: 1;
+            font-family: monospace;
+        }
+
+        .mock-body {
+            padding: 16px;
+        }
+
+        /* GITHUB UI MOCKUP elements */
+        .gh-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .gh-logo {
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: -1px;
+        }
+
+        .gh-btn {
+            background: #238636;
+            color: #fff;
+            border: none;
+            padding: 5px 14px;
+            border-radius: 6px;
+            font-size: .8rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .gh-btn.blue {
+            background: #1f6feb;
+        }
+
+        .gh-btn.outline {
+            background: transparent;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+        }
+
+        .gh-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 10px;
+        }
+
+        .gh-nav span {
+            color: #8b949e;
+            font-size: .83rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .gh-nav span.active {
+            color: #f0f6fc;
+            background: #1f2937;
+        }
+
+        .gh-input {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-size: .83rem;
+            padding: 8px 12px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .gh-label {
+            color: #8b949e;
+            font-size: .8rem;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .gh-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .gh-check {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #30363d;
+            border-radius: 4px;
+            background: #238636;
+            flex-shrink: 0;
+        }
+
+        .gh-check.empty {
+            background: transparent;
+        }
+
+        .gh-radio {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid #238636;
+            background: #238636;
+            flex-shrink: 0;
+        }
+
+        .gh-radio.off {
+            border-color: #30363d;
+            background: transparent;
+        }
+
+        .highlight-box {
+            border: 1px solid #238636;
+            background: rgba(35, 134, 54, .1);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+        }
+
+        .arrow-down {
+            text-align: center;
+            color: var(--accent);
+            font-size: 1.4rem;
+            margin: 6px 0;
+        }
+
+        /* PAGES MOCK */
+        .pages-sidebar {
+            display: flex;
+            gap: 14px;
+        }
+
+        .sidebar-menu {
+            width: 170px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-item {
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: .8rem;
+            color: #8b949e;
+            cursor: pointer;
+        }
+
+        .sidebar-item.active {
+            background: #1f2937;
+            color: #58a6ff;
+        }
+
+        .sidebar-item.highlight {
+            background: rgba(6, 182, 212, .15);
+            color: var(--a2);
+            border: 1px solid var(--border);
+        }
+
+        .pages-content {
+            flex: 1;
+        }
+
+        .pages-title {
+            font-weight: 700;
+            color: #f0f6fc;
+            margin-bottom: 10px;
+            font-size: .9rem;
+        }
+
+        .pages-source {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .pages-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .select-box {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-size: .8rem;
+            padding: 5px 10px;
+        }
+
+        .save-btn {
+            background: #238636;
+            color: #fff;
+            border: none;
+            padding: 5px 14px;
+            border-radius: 6px;
+            font-size: .8rem;
+            font-weight: 600;
+        }
+
+        /* LINK BOX */
+        .link-box {
+            background: rgba(6, 182, 212, .08);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-family: monospace;
+            font-size: .9rem;
+            color: var(--a2);
+            margin: 10px 0;
+            word-break: break-all;
+        }
+
+        /* CODE BOX */
+        .code-box {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: .83rem;
+            color: #c9d1d9;
+            line-height: 1.6;
+            overflow-x: auto;
+            position: relative;
+            margin: 10px 0;
+        }
+
+        .code-tag {
+            color: #7ee787;
+        }
+
+        .code-attr {
+            color: #79c0ff;
+        }
+
+        .code-val {
+            color: #a5d6ff;
+        }
+
+        .code-txt {
+            color: #c9d1d9;
+        }
+
+        /* TIPS */
+        .tip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .tip-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all .3s;
+        }
+
+        .tip-card:hover {
+            border-color: var(--accent);
+        }
+
+        .tip-card .icon {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .tip-card h4 {
+            font-size: .88rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .tip-card p {
+            font-size: .82rem;
+            margin: 0;
+        }
+
+        /* ALERT */
+        .alert {
+            background: rgba(245, 158, 11, .09);
+            border: 1px solid rgba(245, 158, 11, .35);
+            border-left: 4px solid var(--gold);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-size: .88rem;
+            color: #fde68a;
+        }
+
+        .alert.green {
+            background: rgba(16, 185, 129, .09);
+            border-color: rgba(16, 185, 129, .35);
+            border-left-color: var(--green);
+            color: #a7f3d0;
+        }
+
+        .alert.blue {
+            background: rgba(6, 182, 212, .09);
+            border-color: rgba(6, 182, 212, .35);
+            border-left-color: var(--accent);
+            color: #a5f3fc;
+        }
+
+        /* BACK */
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--a2);
+            text-decoration: none;
+            font-size: .88rem;
+            font-weight: 500;
+            padding: 7px 14px;
+            background: rgba(6, 182, 212, .09);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 28px;
+            transition: all .2s;
+        }
+
+        .back:hover {
+            background: rgba(6, 182, 212, .18);
+        }
+
+        footer {
+            text-align: center;
+            padding: 28px 20px;
+            color: var(--muted);
+            font-size: .83rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer a {
+            color: var(--a2);
+            text-decoration: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        @media(max-width:600px) {
+            .pages-sidebar {
+                flex-direction: column
+            }
+
+            .sidebar-menu {
+                width: 100%
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero">
+        <span class="wave">🌐</span>
+        <div class="badge">GitHub Pages Tutorial</div>
+        <h1>Tạo Trang Web Miễn Phí<br>Bằng GitHub Pages</h1>
+        <p>Hướng dẫn từng bước — từ tạo tài khoản đến có link chia sẻ ngay</p>
+        <div class="hero-links">
+            <a href="index.html">🎵 Tạo Nhạc AI</a>
+            <a href="video.html">🎬 Tạo Video AI</a>
+        </div>
+    </div>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="#b1">1️⃣ Tạo Repo</a>
+            <a href="#b2">2️⃣ Upload File</a>
+            <a href="#b3">3️⃣ Bật Pages</a>
+            <a href="#b4">4️⃣ Lấy Link</a>
+            <a href="#b5">5️⃣ Viết HTML</a>
+            <a href="#tips">💡 Tips</a>
+        </div>
+    </nav>
+
+    <main>
+        <a href="index.html" class="back">← Về Trang Chủ</a>
+
+        <!-- OVERVIEW -->
+        <section id="overview">
+            <h2>📌 GitHub Pages Là Gì?</h2>
+            <p><strong style="color:#fff">GitHub Pages</strong> là dịch vụ hosting miễn phí của GitHub. Bạn chỉ cần
+                upload file HTML lên GitHub, bật Pages — là có ngay link website để chia sẻ với ai cũng được.</p>
+            <div class="alert blue">
+                🔗 Link có dạng: <strong>https://[username].github.io/[tên-repo]/</strong><br>
+                Ví dụ: <strong>https://dotanminh.github.io/hd_tao_nhac_gemini/</strong>
+            </div>
+            <div class="tip-grid">
+                <div class="tip-card">
+                    <div class="icon">🆓</div>
+                    <h4>Hoàn toàn miễn phí</h4>
+                    <p>Không giới hạn thời gian, không cần thẻ ngân hàng</p>
+                </div>
+                <div class="tip-card">
+                    <div class="icon">⚡</div>
+                    <h4>Dễ dùng</h4>
+                    <p>Không cần biết lập trình server, không cần cài phần mềm</p>
+                </div>
+                <div class="tip-card">
+                    <div class="icon">🔗</div>
+                    <h4>Link đẹp</h4>
+                    <p>Domain dạng .github.io chuyên nghiệp, dễ nhớ</p>
+                </div>
+                <div class="tip-card">
+                    <div class="icon">📁</div>
+                    <h4>Nhiều file</h4>
+                    <p>Thêm bao nhiêu file HTML cũng được, mỗi file là 1 trang</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BƯỚC 1 -->
+        <section id="b1">
+            <h2>1️⃣ Bước 1 — Tạo Tài Khoản & Repository</h2>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3>Đăng ký GitHub</h3>
+                        <p>Vào github.com → Sign Up → nhập email, mật khẩu, chọn username</p>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <div class="mock">
+                        <div class="mock-bar">
+                            <div class="mock-dot d-r"></div>
+                            <div class="mock-dot d-y"></div>
+                            <div class="mock-dot d-g"></div>
+                            <div class="mock-url">github.com/signup</div>
+                        </div>
+                        <div class="mock-body">
+                            <div class="gh-header"><span class="gh-logo">GitHub</span></div>
+                            <div style="color:#f0f6fc;font-weight:700;font-size:1.1rem;margin-bottom:14px;">Create your
+                                account</div>
+                            <label class="gh-label">Username</label>
+                            <div class="gh-input" style="color:#c9d1d9;">tentoi123</div>
+                            <label class="gh-label">Email</label>
+                            <div class="gh-input" style="color:#c9d1d9;">email@gmail.com</div>
+                            <label class="gh-label">Password</label>
+                            <div class="gh-input" style="color:#c9d1d9;">••••••••</div>
+                            <div class="gh-btn" style="width:100%;text-align:center;padding:8px;margin-top:6px;">
+                                Continue →</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3>Tạo Repository mới</h3>
+                        <p>Nhấn nút "+" góc trên phải → New repository</p>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <div class="mock">
+                        <div class="mock-bar">
+                            <div class="mock-dot d-r"></div>
+                            <div class="mock-dot d-y"></div>
+                            <div class="mock-dot d-g"></div>
+                            <div class="mock-url">github.com/new</div>
+                        </div>
+                        <div class="mock-body">
+                            <div style="color:#f0f6fc;font-weight:700;font-size:1rem;margin-bottom:14px;">Create a new
+                                repository</div>
+                            <label class="gh-label">Repository name *</label>
+                            <div class="highlight-box">
+                                <div class="gh-input" style="color:#7ee787;margin:0;">huong-dan-nhac-ai</div>
+                            </div>
+                            <label class="gh-label">Description (tuỳ chọn)</label>
+                            <div class="gh-input" style="color:#8b949e;">Hướng dẫn tạo nhạc bằng AI</div>
+                            <div style="margin:12px 0;">
+                                <div class="gh-row">
+                                    <div class="gh-radio"></div>
+                                    <div>
+                                        <div style="color:#f0f6fc;font-size:.85rem;font-weight:600;">🔓 Public</div>
+                                        <div style="color:#8b949e;font-size:.78rem;">Bắt buộc chọn Public để dùng GitHub
+                                            Pages miễn phí</div>
+                                    </div>
+                                </div>
+                                <div class="gh-row">
+                                    <div class="gh-radio off"></div>
+                                    <div style="color:#8b949e;font-size:.85rem;">🔒 Private</div>
+                                </div>
+                            </div>
+                            <div class="highlight-box">
+                                <div class="gh-btn" style="width:100%;text-align:center;padding:8px;">✅ Create
+                                    repository</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert">⚠️ Phải chọn <strong>Public</strong> — nếu chọn Private thì GitHub Pages sẽ không
+                        hoạt động ở plan miễn phí.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BƯỚC 2 -->
+        <section id="b2">
+            <h2>2️⃣ Bước 2 — Upload File HTML</h2>
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3>Upload index.html lên repo</h3>
+                        <p>Trong repo vừa tạo → Add file → Upload files</p>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <div class="mock">
+                        <div class="mock-bar">
+                            <div class="mock-dot d-r"></div>
+                            <div class="mock-dot d-y"></div>
+                            <div class="mock-dot d-g"></div>
+                            <div class="mock-url">github.com/tentoi123/huong-dan-nhac-ai</div>
+                        </div>
+                        <div class="mock-body">
+                            <div class="gh-nav">
+                                <span class="active">📄 Code</span><span>⚠️ Issues</span><span>⚙️ Settings</span>
+                            </div>
+                            <div style="display:flex;gap:8px;margin-bottom:12px;justify-content:flex-end;">
+                                <div class="gh-btn outline">Go to file</div>
+                                <div class="highlight-box" style="padding:0;margin:0;">
+                                    <div class="gh-btn">+ Add file ▼</div>
+                                </div>
+                            </div>
+                            <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;">
+                                <div style="padding:10px 14px;border-bottom:1px solid #30363d;display:flex;gap:10px;">
+                                    <div style="color:#58a6ff;font-size:.83rem;cursor:pointer;">📁 Create new file</div>
+                                </div>
+                                <div style="padding:10px 14px;background:rgba(6,182,212,.08);">
+                                    <div style="color:var(--a2);font-size:.83rem;font-weight:600;">📤 Upload files ←
+                                        Chọn cái này</div>
+                                </div>
+                            </div>
+                            <div
+                                style="margin-top:12px;border:2px dashed #30363d;border-radius:8px;padding:20px;text-align:center;color:#8b949e;font-size:.83rem;">
+                                Kéo thả file vào đây hoặc nhấn <span style="color:#58a6ff;">choose your files</span><br>
+                                <strong style="color:#7ee787;">index.html</strong> ← file cần upload
+                            </div>
+                            <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px;">
+                                <div class="gh-btn">✅ Commit changes</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert green">✅ Tên file phải là <strong>index.html</strong> (chữ thường) để làm trang
+                        chủ mặc định.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BƯỚC 3 -->
+        <section id="b3">
+            <h2>3️⃣ Bước 3 — Bật GitHub Pages</h2>
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-num">4</div>
+                    <div>
+                        <h3>Vào Settings → Pages</h3>
+                        <p>Cấu hình GitHub Pages để deploy trang web</p>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <div class="mock">
+                        <div class="mock-bar">
+                            <div class="mock-dot d-r"></div>
+                            <div class="mock-dot d-y"></div>
+                            <div class="mock-dot d-g"></div>
+                            <div class="mock-url">github.com/tentoi123/huong-dan-nhac-ai/settings/pages</div>
+                        </div>
+                        <div class="mock-body">
+                            <div class="pages-sidebar">
+                                <div class="sidebar-menu">
+                                    <div class="sidebar-item">⚙️ General</div>
+                                    <div style="color:#8b949e;font-size:.75rem;padding:6px 10px;font-weight:600;">Code
+                                        and automation</div>
+                                    <div class="sidebar-item">🌿 Branches</div>
+                                    <div class="sidebar-item">🏷️ Tags</div>
+                                    <div class="sidebar-item">⚡ Actions</div>
+                                    <div class="sidebar-item highlight">📄 Pages ← ĐÂY</div>
+                                </div>
+                                <div class="pages-content">
+                                    <div class="pages-title">GitHub Pages</div>
+                                    <div class="pages-source">
+                                        <div style="color:#8b949e;font-size:.8rem;margin-bottom:8px;">Source</div>
+                                        <div class="pages-row">
+                                            <select class="select-box">
+                                                <option>Deploy from a branch</option>
+                                            </select>
+                                        </div>
+                                        <div style="color:#8b949e;font-size:.8rem;margin:8px 0 6px;">Branch</div>
+                                        <div class="pages-row">
+                                            <select class="select-box">
+                                                <option>main</option>
+                                            </select>
+                                            <select class="select-box">
+                                                <option>/ (root)</option>
+                                            </select>
+                                            <button class="save-btn">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top:14px;">
+                        <div class="arrow-down">↓</div>
+                        <div style="font-weight:600;color:#fff;margin-bottom:8px;font-size:.9rem;">Tóm tắt cấu hình:
+                        </div>
+                        <div class="tip-grid" style="grid-template-columns:1fr 1fr 1fr;">
+                            <div class="tip-card">
+                                <div class="icon">📋</div>
+                                <h4>Source</h4>
+                                <p>Deploy from a branch</p>
+                            </div>
+                            <div class="tip-card">
+                                <div class="icon">🌿</div>
+                                <h4>Branch</h4>
+                                <p>main</p>
+                            </div>
+                            <div class="tip-card">
+                                <div class="icon">📁</div>
+                                <h4>Folder</h4>
+                                <p>/ (root)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BƯỚC 4 -->
+        <section id="b4">
+            <h2>4️⃣ Bước 4 — Lấy Link & Chia Sẻ</h2>
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-num">5</div>
+                    <div>
+                        <h3>Chờ 1–2 phút → Lấy link</h3>
+                        <p>GitHub sẽ tự động build và deploy trang web của bạn</p>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <div class="mock">
+                        <div class="mock-bar">
+                            <div class="mock-dot d-r"></div>
+                            <div class="mock-dot d-y"></div>
+                            <div class="mock-dot d-g"></div>
+                            <div class="mock-url">github.com/tentoi123/huong-dan-nhac-ai/settings/pages</div>
+                        </div>
+                        <div class="mock-body">
+                            <div
+                                style="background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px;text-align:center;">
+                                <div style="color:#10b981;font-weight:700;font-size:.95rem;margin-bottom:6px;">✅ Your
+                                    site is live at:</div>
+                                <div style="color:#58a6ff;font-size:.9rem;font-family:monospace;">
+                                    https://tentoi123.github.io/huong-dan-nhac-ai/</div>
+                                <div style="margin-top:10px;">
+                                    <div class="gh-btn" style="display:inline-block;">🔗 Visit site</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:14px;">
+                        <div style="font-weight:600;color:#fff;margin-bottom:8px;">Cấu trúc link các trang:</div>
+                        <div class="code-box">
+                            <span style="color:#8b949e;"># Trang chủ (index.html)</span>
+                            https://[username].github.io/[repo]/
+
+                            <span style="color:#8b949e;"># Các trang khác</span>
+                            https://[username].github.io/[repo]/video.html
+                            https://[username].github.io/[repo]/hd.html
+
+                            <span style="color:#8b949e;"># Anchor link (cuộn đến phần cụ thể)</span>
+                            https://[username].github.io/[repo]/#overview
+                            https://[username].github.io/[repo]/#steps
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BƯỚC 5 -->
+        <section id="b5">
+            <h2>5️⃣ Bước 5 — Cấu Trúc HTML Cơ Bản</h2>
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-num">6</div>
+                    <div>
+                        <h3>Template HTML tối thiểu</h3>
+                        <p>Copy & paste, sửa nội dung là xong</p>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <div class="code-box"><span class="code-tag">&lt;!DOCTYPE html&gt;</span>
+                        <span class="code-tag">&lt;html</span> <span class="code-attr">lang</span>=<span
+                            class="code-val">"vi"</span><span class="code-tag">&gt;</span>
+                        <span class="code-tag">&lt;head&gt;</span>
+                        <span class="code-tag">&lt;meta</span> <span class="code-attr">charset</span>=<span
+                            class="code-val">"UTF-8"</span><span class="code-tag">/&gt;</span>
+                        <span class="code-tag">&lt;title&gt;</span><span class="code-txt">Tên trang của bạn</span><span
+                            class="code-tag">&lt;/title&gt;</span>
+                        <span class="code-tag">&lt;/head&gt;</span>
+                        <span class="code-tag">&lt;body&gt;</span>
+
+                        <span class="code-tag">&lt;h1&gt;</span><span class="code-txt">Tiêu đề chính</span><span
+                            class="code-tag">&lt;/h1&gt;</span>
+
+                        <span class="code-tag">&lt;section</span> <span class="code-attr">id</span>=<span
+                            class="code-val">"phan-1"</span><span class="code-tag">&gt;</span>
+                        <span class="code-tag">&lt;h2&gt;</span><span class="code-txt">Phần 1</span><span
+                            class="code-tag">&lt;/h2&gt;</span>
+                        <span class="code-tag">&lt;p&gt;</span><span class="code-txt">Nội dung...</span><span
+                            class="code-tag">&lt;/p&gt;</span>
+                        <span class="code-tag">&lt;/section&gt;</span>
+
+                        <span class="code-tag">&lt;section</span> <span class="code-attr">id</span>=<span
+                            class="code-val">"phan-2"</span><span class="code-tag">&gt;</span>
+                        <span class="code-tag">&lt;h2&gt;</span><span class="code-txt">Phần 2</span><span
+                            class="code-tag">&lt;/h2&gt;</span>
+                        <span class="code-tag">&lt;/section&gt;</span>
+
+                        <span style="color:#8b949e;">&lt;!-- Link sang trang khác --&gt;</span>
+                        <span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span
+                            class="code-val">"video.html"</span><span class="code-tag">&gt;</span><span
+                            class="code-txt">Xem trang Video</span><span class="code-tag">&lt;/a&gt;</span>
+
+                        <span style="color:#8b949e;">&lt;!-- Anchor link (link đến phần cụ thể) --&gt;</span>
+                        <span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span
+                            class="code-val">"#phan-2"</span><span class="code-tag">&gt;</span><span
+                            class="code-txt">Đến Phần 2</span><span class="code-tag">&lt;/a&gt;</span>
+
+                        <span class="code-tag">&lt;/body&gt;</span>
+                        <span class="code-tag">&lt;/html&gt;</span>
+                    </div>
+                    <div class="alert blue">💡 <strong>id="phan-1"</strong> trong thẻ section chính là cách tạo anchor
+                        link <strong>#phan-1</strong> — giống như #overview, #steps trong trang này!</div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-num">7</div>
+                    <div>
+                        <h3>Thêm nhiều trang HTML</h3>
+                        <p>Mỗi file là 1 trang riêng, link đến nhau bằng href</p>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <div class="code-box"><span style="color:#8b949e;"># Cấu trúc thư mục repo của bạn:</span>
+
+                        📁 repo/
+                        ├── <span style="color:#7ee787;">index.html</span> → <span style="color:#8b949e;">trang chủ (mặc
+                            định)</span>
+                        ├── <span style="color:#7ee787;">video.html</span> → <span style="color:#8b949e;">trang video
+                            AI</span>
+                        ├── <span style="color:#7ee787;">hd.html</span> → <span style="color:#8b949e;">trang hướng
+                            dẫn</span>
+                        └── <span style="color:#7ee787;">bai-viet.html</span> → <span style="color:#8b949e;">bài viết
+                            khác</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIPS -->
+        <section id="tips">
+            <h2>💡 Tips & Thủ Thuật</h2>
+            <div class="tip-grid">
+                <div class="tip-card">
+                    <div class="icon">🖼️</div>
+                    <h4>Thêm ảnh</h4>
+                    <p>Upload ảnh lên repo và dùng <code
+                            style="background:#1e293b;padding:1px 5px;border-radius:4px;font-size:.8rem;">&lt;img src="anh.jpg"&gt;</code>
+                    </p>
+                </div>
+                <div class="tip-card">
+                    <div class="icon">🎨</div>
+                    <h4>Dark theme</h4>
+                    <p>Thêm CSS: <code
+                            style="background:#1e293b;padding:1px 5px;border-radius:4px;font-size:.8rem;">background:#0f0f1a; color:#e2e8f0;</code>
+                    </p>
+                </div>
+                <div class="tip-card">
+                    <div class="icon">📱</div>
+                    <h4>Mobile friendly</h4>
+                    <p>Thêm tag: <code
+                            style="background:#1e293b;padding:1px 5px;border-radius:4px;font-size:.8rem;">&lt;meta name="viewport"...&gt;</code>
+                    </p>
+                </div>
+                <div class="tip-card">
+                    <div class="icon">✏️</div>
+                    <h4>Sửa nội dung</h4>
+                    <p>Vào repo → click file → icon bút chì → sửa trực tiếp trên GitHub</p>
+                </div>
+                <div class="tip-card">
+                    <div class="icon">🔄</div>
+                    <h4>Cập nhật nhanh</h4>
+                    <p>Upload file mới đè lên file cũ → GitHub tự động cập nhật trong vài giây</p>
+                </div>
+                <div class="tip-card">
+                    <div class="icon">🔗</div>
+                    <h4>Custom domain</h4>
+                    <p>Có thể gắn tên miền riêng (.com) trong Settings → Pages → Custom domain</p>
+                </div>
+            </div>
+            <div class="alert green" style="margin-top:16px;">
+                🚀 <strong>Lộ trình nhanh:</strong> Tạo tài khoản GitHub → Tạo repo Public → Upload index.html →
+                Settings → Pages → Save → Đợi 2 phút → Có link!
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>📅 2026 &nbsp;|&nbsp; <a href="index.html">🎵 Tạo Nhạc AI</a> · <a href="video.html">🎬 Tạo Video AI</a></p>
+        <p style="margin-top:6px;color:#4b5563;">Made with ❤️ — GitHub Pages Tutorial</p>
+    </footer>
+
+</body>
+
+</html>
